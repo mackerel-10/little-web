@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:20.5
 
 WORKDIR /usr/src/app
 
@@ -8,4 +8,4 @@ RUN npm install
 
 COPY ./ ./
 
-CMD ["npm", "run", "build"]
+CMD ["npm", "run", "dev"]
