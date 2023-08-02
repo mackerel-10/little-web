@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  node:
+    container_name: node
+    restart: on-failure
+    build:
+      context: ../
+      dockerfile: ./deploy/node/Dockerfile.dev
+    depends_on:
+      - mysql
+      - redis
+
+  nginx:
+    container_name: nginx
+    restart: on-failure
+    image: nginx:latest
+    ports:
+      - 80:80
+
+  mysql:
+    container_name: mysql
+    restart: on-failure
+    image: mysql:latest
+    ports:
+      - 3306:3306
+
+  redis:
+    container_name: redis
+    restart: on-failure
+    image: redis:latest
+    ports:
+      - 6379:6379
+    command: redis-server
