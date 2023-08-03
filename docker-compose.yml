@@ -23,11 +23,14 @@ services:
   mysql:
     container_name: mysql
     restart: on-failure
-    image: mysql:8.0
+    build: ./deploy/mysql/
     ports:
-      - 3306:3306
+      - 3307:3307
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER_NAME=${MYSQL_USER_NAME}
+      - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
 
   redis:
     container_name: redis
