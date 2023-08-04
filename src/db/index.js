@@ -9,10 +9,8 @@ const options = {
   port: 3306,
 };
 
-let db;
+const db = mysql.createPool(options);
 (async () => {
-  db = mysql.createPool(options);
-
   db.on('connect', () => {
     console.log('MySQL connected\n');
   });
@@ -38,3 +36,4 @@ const redisClient = createClient({
 })();
 
 export default db;
+export * from './models';
