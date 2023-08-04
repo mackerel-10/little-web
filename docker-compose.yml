@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+  node:
+    container_name: node
+    restart: on-failure
+    build:
+      context: ./
+      dockerfile: ./deploy/node/Dockerfile.dev
+    volumes:
+      - ./:/usr/src/app
+    depends_on:
+      - mysql
+      - redis
+
+  nginx:
+    container_name: nginx
+    restart: on-failure
+    image: nginx:1.24
+    ports:
+      - 80:80
+
+  mysql:
+    container_name: mysql
+    restart: on-failure
+    build: ./deploy/mysql/
+    ports:
+      - 3307:3307
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER_NAME=${MYSQL_USER_NAME}
+      - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+
+  redis:
+    container_name: redis
+    restart: on-failure
+    image: redis:7.0
+    ports:
+      - 6379:6379
+    command: redis-server
