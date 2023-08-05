@@ -6,7 +6,7 @@ const authRouter = Router();
 
 authRouter.post(
   '/api/v1/auth/users',
-  authValidator.userSignUp,
+  authValidator.userData,
   authService.createUser
 );
 

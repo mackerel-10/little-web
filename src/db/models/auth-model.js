@@ -11,10 +11,10 @@ class AuthModel {
     `;
 
     const connection = await db.getConnection();
-    const result = connection.query(query, userData);
+    const result = await connection.query(query, userData);
     connection.release();
 
-    // return createResult;
+    return result;
   }
 }
 

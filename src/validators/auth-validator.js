@@ -2,7 +2,7 @@ import Joi from 'joi';
 import { StatusCodes } from 'http-status-codes';
 
 const authValidator = {
-  userSignUp: async function (req, res, next) {
+  userData: async function (req, res, next) {
     try {
       const { email, password } = req.body;
       const schema = Joi.object().keys({
