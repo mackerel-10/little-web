@@ -2,6 +2,7 @@ import Joi from 'joi';
 import { StatusCodes } from 'http-status-codes';
 
 class AuthValidator {
+  // 사용자 정보 Validator
   async userData(req, res, next) {
     try {
       const { email, password } = req.body;

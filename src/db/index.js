@@ -1,6 +1,7 @@
 import mysql from 'mysql2/promise';
 import { createClient } from 'redis';
 
+// MySQL
 const options = {
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER_NAME,
@@ -10,8 +11,8 @@ const options = {
 };
 
 const db = mysql.createPool(options);
-db.on('acquire', () => {
-  console.log('MySQL connected\n');
+db.on('connection', () => {
+  console.log('MySQL connected!\n');
 });
 db.on('error', (error) => {
   console.error('MySQL failed...\n', error);

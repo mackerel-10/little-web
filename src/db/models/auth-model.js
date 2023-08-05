@@ -11,10 +11,25 @@ class AuthModel {
     `;
 
     const connection = await db.getConnection();
-    const result = await connection.query(query, userData);
+    const insertResult = await connection.query(query, userData);
     connection.release();
 
-    return result;
+    return insertResult;
+  }
+
+  // 이메일로 사용자 검색
+  async findUserByEmail(email) {
+    const query = `
+      SELECT *
+      FROM user
+      WHERE email = "${email}";
+    `;
+
+    const connection = await db.getConnection();
+    const selectResult = await connection.query(query);
+    connection.release();
+
+    return selectResult[0][0];
   }
 }
 

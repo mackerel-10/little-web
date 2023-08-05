@@ -4,10 +4,18 @@ import { authModel } from '../db';
 import { CustomError } from '../middlewares';
 
 class AuthService {
+  // POST /auth/users
   async createUser(req, res, next) {
     try {
       const { email, password } = req.body;
 
+      // 중복 사용자 검색
+      const user = await authModel.findUserByEmail(email);
+      if (user) {
+        throw new CustomError(StatusCodes.BAD_REQUEST, '사용자가 있습니다.');
+      }
+
+      // 해쉬 비밀번호 생성
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -19,8 +27,37 @@ class AuthService {
         );
       }
 
-      res.status(StatusCodes.OK).json({
+      return res.status(StatusCodes.OK).json({
         message: '회원가입 했습니다.',
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // POST /auth/signin
+  async signIn(req, res, next) {
+    try {
+      const { email, password } = req.body;
+
+      // 사용자 DB 검색
+      const user = await authModel.findUserByEmail(email);
+      if (!user) {
+        throw new CustomError(StatusCodes.NOT_FOUND, '사용자가 업습니다.');
+      }
+
+      // 비밀번호 검증
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        throw new CustomError(
+          StatusCodes.BAD_REQUEST,
+          '잘못된 비밀번호 입니다.'
+        );
+      }
+
+      // res.header('Authorization', accessToken);
+      return res.status(StatusCodes.OK).json({
+        message: '로그인 했습니다.',
       });
     } catch (error) {
       next(error);
