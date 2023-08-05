@@ -2,16 +2,19 @@ import db from '../index';
 
 class AuthModel {
   // 사용자 생성
-  createUser(userData) {
+  async createUser(userData) {
     const query = `
       INSERT INTO user (
         email, 
         password
-        ) VALUES (?, ?)
+        ) VALUES (?, ?);
     `;
-    const createResult = db.query(query, userData);
 
-    return createResult;
+    const connection = await db.getConnection();
+    const result = connection.query(query, userData);
+    connection.release();
+
+    // return createResult;
   }
 }
 

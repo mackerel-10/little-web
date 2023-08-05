@@ -1,4 +1,4 @@
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 import { createClient } from 'redis';
 
 const options = {
@@ -10,14 +10,12 @@ const options = {
 };
 
 const db = mysql.createPool(options);
-(async () => {
-  db.on('connect', () => {
-    console.log('MySQL connected\n');
-  });
-  db.on('error', (error) => {
-    console.error('MySQL failed...\n', error);
-  });
-})();
+db.on('acquire', () => {
+  console.log('MySQL connected\n');
+});
+db.on('error', (error) => {
+  console.error('MySQL failed...\n', error);
+});
 
 // Redis
 const redisClient = createClient({

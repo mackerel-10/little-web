@@ -10,9 +10,9 @@ class AuthService {
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const result = authModel.createUser([email, hashedPassword]);
+      console.log(hashedPassword.length);
+      authModel.createUser([email, hashedPassword]);
 
-      console.log(result);
       res.status(StatusCodes.OK).json({
         message: '회원가입 했습니다.',
       });
