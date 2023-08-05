@@ -1,0 +1,11 @@
+.git
+.gitignore
+.dockerignore
+
+# babel.config.json
+dump.rdb
+docker-compose.yml
+
+node_modules/
+dist/
+deploy/
