@@ -1,8 +1,8 @@
 import Joi from 'joi';
 import { StatusCodes } from 'http-status-codes';
 
-const authValidator = {
-  userData: async function (req, res, next) {
+class AuthValidator {
+  async userData(req, res, next) {
     try {
       const { email, password } = req.body;
       const schema = Joi.object().keys({
@@ -15,7 +15,9 @@ const authValidator = {
     } catch (error) {
       next({ statusCode: StatusCodes.BAD_REQUEST, message: error.message });
     }
-  },
-};
+  }
+}
+
+const authValidator = new AuthValidator();
 
 export default authValidator;
