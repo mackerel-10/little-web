@@ -9,11 +9,9 @@ class AuthModel {
         password
         ) VALUES (?, ?)
     `;
+    const createResult = db.query(query, userData);
 
-    const result = db.query(query, userData);
-    if (!result) {
-      throw error();
-    }
+    return createResult;
   }
 }
 

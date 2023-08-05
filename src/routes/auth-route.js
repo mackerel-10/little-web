@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authController } from '../controllers';
+import { authService } from '../services';
 import { authValidator } from '../validators';
 
 const authRouter = Router();
@@ -7,7 +7,7 @@ const authRouter = Router();
 authRouter.post(
   '/api/v1/auth/users',
   authValidator.userSignUp,
-  authController.createUser
+  authService.createUser
 );
 
 export default authRouter;

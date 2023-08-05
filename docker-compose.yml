@@ -8,8 +8,8 @@ services:
       context: ./
       dockerfile: ./deploy/node/Dockerfile.dev
     volumes:
-      - ./:/usr/src/app
-      # - /usr/src/app/node_modules
+      - ./src:/usr/src/app/src
+      - /usr/src/app/node_modules
     depends_on:
       - mysql
       - redis
