@@ -1,13 +1,13 @@
-FROM node:latest
+FROM node:20.5
 
 WORKDIR /usr/src/app
 
-COPY packeage*.json ./
+COPY package*.json ./
 
 RUN npm install
 
 COPY ./ ./
 
-RUN npm run dev
+RUN npm run build
 
 CMD ["npm", "start"]

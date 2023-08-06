@@ -6,9 +6,8 @@ services:
     restart: on-failure
     build:
       context: ./
-      dockerfile: ./deploy/node/Dockerfile.dev
+      dockerfile: ./deploy/node/Dockerfile
     volumes:
-      - ./src:/usr/src/app/src
       - /usr/src/app/node_modules
     depends_on:
       - mysql

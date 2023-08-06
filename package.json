@@ -2,8 +2,10 @@
   "name": "pre-onboarding-backend",
   "version": "1.0.0",
   "description": "wanted pre onboarding backend",
-  "main": "./src",
+  "main": "./",
   "scripts": {
+    "build": "babel src -d dist",
+    "start": "node dist/app",
     "dev": "nodemon ./src/app --exec babel-node"
   },
   "author": "",
