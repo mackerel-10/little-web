@@ -29,11 +29,16 @@ const postModel = {
         SELECT *
         FROM post
         WHERE author_id = ?
-        AND id BETWEEN ? AND ?;
+        ORDER BY id
+        LIMIT ?, ?;
       `;
 
       const connection = await db.getConnection();
-      const queryData = Object.values(postData);
+      const queryData = [
+        postData.author_id,
+        (postData.page - 1) * postData.perPage,
+        Number(postData.perPage),
+      ];
       const postList = await connection.query(query, queryData);
       connection.release();
 
