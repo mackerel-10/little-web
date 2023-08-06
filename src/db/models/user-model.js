@@ -1,8 +1,8 @@
 import { db } from '../index';
 
-class AuthModel {
+const userModel = {
   // 사용자 생성
-  async createUser(userData) {
+  createUser: async function (userData) {
     const query = `
       INSERT INTO user (
         email, 
@@ -15,10 +15,10 @@ class AuthModel {
     connection.release();
 
     return insertResult;
-  }
+  },
 
   // 이메일로 사용자 검색
-  async findUserByEmail(email) {
+  findUserByEmail: async function (email) {
     const query = `
       SELECT *
       FROM user
@@ -30,9 +30,7 @@ class AuthModel {
     connection.release();
 
     return selectResult[0][0];
-  }
-}
+  },
+};
 
-const authModel = new AuthModel();
-
-export default authModel;
+export default userModel;

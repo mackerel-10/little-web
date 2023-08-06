@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import * as bcrypt from 'bcrypt';
-import { authModel } from '../db';
+import { userModel } from '../db';
 import { CustomError } from '../middlewares';
 import { tokenHandler } from './';
 
@@ -11,7 +11,7 @@ const authService = {
       const { email, password } = req.body;
 
       // 중복 사용자 검색
-      const user = await authModel.findUserByEmail(email);
+      const user = await userModel.findUserByEmail(email);
       if (user) {
         throw new CustomError(StatusCodes.BAD_REQUEST, '사용자가 있습니다.');
       }
@@ -20,7 +20,7 @@ const authService = {
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const result = await authModel.createUser([email, hashedPassword]);
+      const result = await userModel.createUser([email, hashedPassword]);
       if (result[0].affectedRows <= 0) {
         throw new CustomError(
           StatusCodes.INTERNAL_SERVER_ERROR,
@@ -42,7 +42,7 @@ const authService = {
       const { email, password } = req.body;
 
       // 사용자 DB 검색
-      const user = await authModel.findUserByEmail(email);
+      const user = await userModel.findUserByEmail(email);
       if (!user) {
         throw new CustomError(StatusCodes.NOT_FOUND, '사용자가 업습니다.');
       }

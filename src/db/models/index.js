@@ -1,3 +1,3 @@
-import authModel from './auth-model';
+import userModel from './user-model';
 
-export { authModel };
+export { userModel };
