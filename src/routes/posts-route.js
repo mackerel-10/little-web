@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { postsService, tokenHandler } from '../services';
+import { postsValidator } from '../validators';
 
 const postsRouter = Router();
 
@@ -14,6 +15,7 @@ postsRouter.post(
 postsRouter.get(
   '/api/v1/posts',
   tokenHandler.verifyAccessToken,
+  postsValidator.pageData,
   postsService.getPostList
 );
 
