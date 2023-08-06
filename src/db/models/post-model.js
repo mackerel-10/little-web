@@ -28,14 +28,12 @@ const postModel = {
       const query = `
         SELECT *
         FROM post
-        WHERE author_id = ?
         ORDER BY id
         LIMIT ?, ?;
       `;
 
       const connection = await db.getConnection();
       const queryData = [
-        postData.author_id,
         (postData.page - 1) * postData.perPage,
         Number(postData.perPage),
       ];

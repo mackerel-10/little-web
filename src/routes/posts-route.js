@@ -15,7 +15,6 @@ postsRouter.post(
 // pagination으로 게시글 조회
 postsRouter.get(
   '/api/v1/posts',
-  tokenHandler.verifyAccessToken,
   postsValidator.checkPageData,
   postsService.getPostList
 );

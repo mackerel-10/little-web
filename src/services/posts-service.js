@@ -28,11 +28,8 @@ const postsService = {
   getPostList: async function (req, res, next) {
     try {
       const { page, perPage } = req.query;
-      const { email } = req.decoded;
 
-      const user = await userModel.findUserByEmail(email);
       const postList = await postModel.getPostList({
-        author_id: user.id,
         page,
         perPage,
       });
