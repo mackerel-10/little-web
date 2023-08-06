@@ -98,7 +98,30 @@ const postsService = {
   },
 
   // DELETE /posts/:id
-  deletePost: async function (req, res, next) {},
+  deletePost: async function (req, res, next) {
+    try {
+      const { id } = req.params;
+      const { email } = req.decoded;
+
+      const user = await userModel.findUserByEmail(email);
+      const deleteResult = await postModel.deletePost({
+        author_id: user.id,
+        postId: id,
+      });
+      if (deleteResult.affectedRows <= 0) {
+        throw new CustomError(
+          StatusCodes.UNAUTHORIZED,
+          '게시글을 삭제할 수 없습니다.'
+        );
+      }
+
+      return res.status(StatusCodes.OK).json({
+        message: '게시글을 삭제했습니다.',
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export default postsService;

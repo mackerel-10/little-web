@@ -37,5 +37,11 @@ postsRouter.put(
 );
 
 // 특정 게시글 삭제
-postsRouter.delete('/api/v1/posts/:id');
+postsRouter.delete(
+  '/api/v1/posts/:id',
+  tokenHandler.verifyAccessToken,
+  postsValidator.checkPostId,
+  postsService.deletePost
+);
+
 export default postsRouter;

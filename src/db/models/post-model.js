@@ -87,6 +87,26 @@ const postModel = {
       throw new CustomError(error);
     }
   },
+
+  // 특정 게시글 삭제
+  deletePost: async function (postData) {
+    try {
+      const query = `
+        DELETE
+        FROM post
+        WHERE author_id = ? AND id = ?;
+      `;
+
+      const connection = await db.getConnection();
+      const queryData = [postData.author_id, postData.postId];
+      const deleteResult = await connection.query(query, queryData);
+      connection.release();
+
+      return deleteResult[0];
+    } catch (error) {
+      throw new CustomError(error);
+    }
+  },
 };
 
 export default postModel;
