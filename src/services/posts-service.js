@@ -1,7 +1,5 @@
-class PostsService {
-  async insertPost(postData) {}
-}
-
-const postsService = new PostsService();
+const postsService = {
+  insertPost: async function (postData) {},
+};
 
 export default postsService;

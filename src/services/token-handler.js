@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { v4 } from 'uuid';
 
-class TokenHandler {
+const tokenHandler = {
   // Access Token 발급
-  generateAccessToken(email) {
+  generateAccessToken: function (email) {
     const newAccessToken = jwt.sign(
       {
         email,
@@ -16,10 +16,10 @@ class TokenHandler {
     );
 
     return newAccessToken;
-  }
+  },
 
   // Refresh Token 발급
-  async generateRefreshToken() {
+  generateRefreshToken: async function () {
     // Refresh Token 발급
     const refreshId = v4();
     const newRefreshToken = jwt.sign(
@@ -35,10 +35,10 @@ class TokenHandler {
     );
 
     return newRefreshToken;
-  }
+  },
 
   // Access Token 검증 미들웨어
-  async verifyAccessToken(req, res, next) {
+  verifyAccessToken: async function (req, res, next) {
     try {
       const authHeader = req.header('Authorization');
       const accessToken = authHeader ? authHeader.replace('Bearer ', '') : null;
@@ -67,9 +67,7 @@ class TokenHandler {
     } catch (err) {
       next(err);
     }
-  }
-}
-
-const tokenHandler = new TokenHandler();
+  },
+};
 
 export default tokenHandler;

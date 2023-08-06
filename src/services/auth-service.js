@@ -4,9 +4,9 @@ import { authModel } from '../db';
 import { CustomError } from '../middlewares';
 import { tokenHandler } from './';
 
-class AuthService {
+const authService = {
   // POST /auth/users
-  async insertUser(req, res, next) {
+  insertUser: async function (req, res, next) {
     try {
       const { email, password } = req.body;
 
@@ -34,10 +34,10 @@ class AuthService {
     } catch (error) {
       next(error);
     }
-  }
+  },
 
   // POST /auth/signin
-  async signIn(req, res, next) {
+  signIn: async function (req, res, next) {
     try {
       const { email, password } = req.body;
 
@@ -68,9 +68,7 @@ class AuthService {
     } catch (error) {
       next(error);
     }
-  }
-}
-
-const authService = new AuthService();
+  },
+};
 
 export default authService;
