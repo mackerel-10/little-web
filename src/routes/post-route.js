@@ -11,7 +11,11 @@ postsRouter.post(
 );
 
 // pagination으로 게시글 조회
-postsRouter.get('/api/v1/posts');
+postsRouter.get(
+  '/api/v1/posts',
+  tokenHandler.verifyAccessToken,
+  postsService.getPostList
+);
 
 // 특정 게시글 조회
 postsRouter.get('/api/v1/posts/:id');
