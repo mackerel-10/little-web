@@ -16,7 +16,7 @@ const postsService = {
         content,
       });
 
-      return res.status(StatusCodes.OK).json({
+      return res.status(StatusCodes.CREATED).json({
         message: '게시글이 작성됐습니다.',
       });
     } catch (error) {
@@ -81,7 +81,7 @@ const postsService = {
       });
       if (updateResult.affectedRows <= 0) {
         throw new CustomError(
-          StatusCodes.UNAUTHORIZED,
+          StatusCodes.NOT_FOUND,
           '게시글을 수정할 수 없습니다.'
         );
       }
@@ -107,7 +107,7 @@ const postsService = {
       });
       if (deleteResult.affectedRows <= 0) {
         throw new CustomError(
-          StatusCodes.UNAUTHORIZED,
+          StatusCodes.NOT_FOUND,
           '게시글을 삭제할 수 없습니다.'
         );
       }

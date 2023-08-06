@@ -22,7 +22,7 @@ const authService = {
       const hashedPassword = await bcrypt.hash(password, salt);
       await userModel.createUser({ email, hashedPassword });
 
-      return res.status(StatusCodes.OK).json({
+      return res.status(StatusCodes.CREATED).json({
         message: '회원가입 했습니다.',
       });
     } catch (error) {
