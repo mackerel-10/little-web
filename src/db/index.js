@@ -34,5 +34,5 @@ const redisClient = createClient({
   await redisClient.connect();
 })();
 
-export default db;
+export { db, redisClient };
 export * from './models';

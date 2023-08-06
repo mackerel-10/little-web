@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import * as bcrypt from 'bcrypt';
 import { authModel } from '../db';
 import { CustomError } from '../middlewares';
+import { tokenHandler } from './';
 
 class AuthService {
   // POST /auth/users
@@ -55,7 +56,12 @@ class AuthService {
         );
       }
 
-      // res.header('Authorization', accessToken);
+      // 토큰 발급
+      const refreshToken = await tokenHandler.generateRefreshToken();
+      const accessToken = tokenHandler.generateAccessToken(email);
+
+      res.header('X-Refresh-Token', `Bearer ${refreshToken}`);
+      res.header('Authorization', `Bearer ${accessToken}`);
       return res.status(StatusCodes.OK).json({
         message: '로그인 했습니다.',
       });

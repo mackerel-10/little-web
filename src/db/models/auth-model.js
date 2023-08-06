@@ -1,4 +1,4 @@
-import db from '../index';
+import { db } from '../index';
 
 class AuthModel {
   // 사용자 생성
