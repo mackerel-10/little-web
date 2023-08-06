@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 import { redisClient } from '../db';
 
 class TokenHandler {
-  // Access Token 생성
+  // Access Token 발급
   generateAccessToken(email) {
     const newAccessToken = jwt.sign(
       {
@@ -19,8 +19,9 @@ class TokenHandler {
     return newAccessToken;
   }
 
-  // Refresh Token 생성
+  // Refresh Token 발급
   async generateRefreshToken() {
+    // Refresh Token 발급
     const refreshId = v4();
     const newRefreshToken = jwt.sign(
       {
