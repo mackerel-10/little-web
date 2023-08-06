@@ -1,4 +1,3 @@
-import { StatusCodes } from 'http-status-codes';
 import { CustomError } from '../../middlewares';
 import { db } from '../index';
 
@@ -15,10 +14,8 @@ const userModel = {
 
       const connection = await db.getConnection();
       const queryData = Object.values(userData);
-      const insertResult = await connection.query(query, queryData);
+      await connection.query(query, queryData);
       connection.release();
-
-      return insertResult;
     } catch (error) {
       throw new CustomError(error);
     }
