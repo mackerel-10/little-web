@@ -38,7 +38,7 @@ const postsService = {
       }
 
       return res.status(StatusCodes.OK).json({
-        message: '게시글을 불러왔습니다.',
+        message: '게시글 목록을 불러왔습니다.',
         data: { postList },
       });
     } catch (error) {
