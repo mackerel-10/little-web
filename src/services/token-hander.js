@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import { v4 } from 'uuid';
-import { redisClient } from '../db';
 
 class TokenHandler {
   // Access Token 발급
@@ -35,18 +34,39 @@ class TokenHandler {
       }
     );
 
-    // Redis에 저장(만료기간 설정)
-    const refreshTokenKey = `refresh_${refreshId}`;
-    const setResult = await redisClient.set(refreshTokenKey, newRefreshToken);
-    const expireResult = await redisClient.expire(
-      refreshTokenKey,
-      Number(process.env.REFRESH_REDIS_EXPIRE)
-    );
-    if (!setResult || !expireResult) {
-      throw new CustomError(StatusCodes.BAD_REQUEST, 'Redis 저장 실패');
-    }
-
     return newRefreshToken;
+  }
+
+  // Access Token 검증 미들웨어
+  async verifyAccessToken(req, res, next) {
+    try {
+      const authHeader = req.header('Authorization');
+      const accessToken = authHeader ? authHeader.replace('Bearer ', '') : null;
+      if (!accessToken) {
+        throw new customError(
+          StatusCodes.UNAUTHORIZED,
+          'Access Token이 없습니다.'
+        );
+      }
+
+      // Access Token 만료됐는지 확인
+      const decodedAccessToken = jwt.decode(accessToken);
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (decodedAccessToken.exp <= currentTime) {
+        throw new customError(
+          StatusCodes.UNAUTHORIZED,
+          'Access Token을 새로 발급받아주세요.',
+          true
+        );
+      }
+
+      req.decoded = decodedAccessToken;
+      console.log('🪙 Access Token has been verified!\n');
+
+      next();
+    } catch (err) {
+      next(err);
+    }
   }
 }
 
