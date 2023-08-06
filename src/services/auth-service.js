@@ -1,17 +1,17 @@
 import { StatusCodes } from 'http-status-codes';
 import * as bcrypt from 'bcrypt';
-import { authModel } from '../db';
+import { userModel } from '../db';
 import { CustomError } from '../middlewares';
 import { tokenHandler } from './';
 
-class AuthService {
+const authService = {
   // POST /auth/users
-  async createUser(req, res, next) {
+  insertUser: async function (req, res, next) {
     try {
       const { email, password } = req.body;
 
       // 중복 사용자 검색
-      const user = await authModel.findUserByEmail(email);
+      const user = await userModel.findUserByEmail(email);
       if (user) {
         throw new CustomError(StatusCodes.BAD_REQUEST, '사용자가 있습니다.');
       }
@@ -20,13 +20,7 @@ class AuthService {
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const result = await authModel.createUser([email, hashedPassword]);
-      if (result[0].affectedRows <= 0) {
-        throw new CustomError(
-          StatusCodes.INTERNAL_SERVER_ERROR,
-          '회원가입에 실패했습니다.'
-        );
-      }
+      await userModel.createUser({ email, hashedPassword });
 
       return res.status(StatusCodes.OK).json({
         message: '회원가입 했습니다.',
@@ -34,17 +28,17 @@ class AuthService {
     } catch (error) {
       next(error);
     }
-  }
+  },
 
   // POST /auth/signin
-  async signIn(req, res, next) {
+  signIn: async function (req, res, next) {
     try {
       const { email, password } = req.body;
 
       // 사용자 DB 검색
-      const user = await authModel.findUserByEmail(email);
+      const user = await userModel.findUserByEmail(email);
       if (!user) {
-        throw new CustomError(StatusCodes.NOT_FOUND, '사용자가 업습니다.');
+        throw new CustomError(StatusCodes.NOT_FOUND, '사용자가 없습니다.');
       }
 
       // 비밀번호 검증
@@ -52,7 +46,7 @@ class AuthService {
       if (!isPasswordValid) {
         throw new CustomError(
           StatusCodes.BAD_REQUEST,
-          '잘못된 비밀번호 입니다.'
+          '잘못된 비밀번호입니다.'
         );
       }
 
@@ -68,9 +62,7 @@ class AuthService {
     } catch (error) {
       next(error);
     }
-  }
-}
-
-const authService = new AuthService();
+  },
+};
 
 export default authService;

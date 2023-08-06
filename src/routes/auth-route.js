@@ -8,7 +8,7 @@ const authRouter = Router();
 authRouter.post(
   '/api/v1/auth/users',
   authValidator.userData,
-  authService.createUser
+  authService.insertUser
 );
 
 // 로그인 API

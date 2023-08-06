@@ -1,3 +1,4 @@
-import authModel from './auth-model';
+import userModel from './user-model';
+import postModel from './post-model';
 
-export { authModel };
+export { userModel, postModel };

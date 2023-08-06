@@ -1,4 +1,5 @@
 import authService from './auth-service';
-import tokenHandler from './token-hander';
+import postsService from './posts-service';
+import tokenHandler from './token-handler';
 
-export { authService, tokenHandler };
+export { authService, postsService, tokenHandler };

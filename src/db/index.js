@@ -11,10 +11,10 @@ const options = {
 
 const db = mysql.createPool(options);
 db.on('connection', () => {
-  console.log('MySQL connected!\n');
+  console.log('MySQL connected!');
 });
 db.on('error', (error) => {
-  console.error('MySQL failed...\n', error);
+  console.error('MySQL failed...', error);
 });
 
 export { db };
