@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { userModel, postModel } from '../db';
+import { CustomError } from '../middlewares';
 
 const postsService = {
   // POST /posts
@@ -35,6 +36,9 @@ const postsService = {
         minimumIndex: (page - 1) * perPage + 1,
         maximumIndex: page * perPage,
       });
+      if (!postList.length) {
+        throw new CustomError(StatusCodes.NOT_FOUND, '게시글이 없습니다.');
+      }
 
       return res.status(StatusCodes.OK).json({
         message: '게시글을 불러왔습니다.',
@@ -51,6 +55,9 @@ const postsService = {
       const { id } = req.params;
 
       const post = await postModel.getPostById(id);
+      if (!post.length) {
+        throw new CustomError(StatusCodes.NOT_FOUND, '게시글이 없습니다.');
+      }
 
       return res.status(StatusCodes.OK).json({
         message: '게시글을 불러왔습니다.',
