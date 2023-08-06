@@ -20,13 +20,7 @@ const authService = {
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const result = await userModel.createUser([email, hashedPassword]);
-      if (result[0].affectedRows <= 0) {
-        throw new CustomError(
-          StatusCodes.INTERNAL_SERVER_ERROR,
-          '회원가입에 실패했습니다.'
-        );
-      }
+      await userModel.createUser({ email, hashedPassword });
 
       return res.status(StatusCodes.OK).json({
         message: '회원가입 했습니다.',
@@ -44,7 +38,7 @@ const authService = {
       // 사용자 DB 검색
       const user = await userModel.findUserByEmail(email);
       if (!user) {
-        throw new CustomError(StatusCodes.NOT_FOUND, '사용자가 업습니다.');
+        throw new CustomError(StatusCodes.NOT_FOUND, '사용자가 없습니다.');
       }
 
       // 비밀번호 검증
@@ -52,7 +46,7 @@ const authService = {
       if (!isPasswordValid) {
         throw new CustomError(
           StatusCodes.BAD_REQUEST,
-          '잘못된 비밀번호 입니다.'
+          '잘못된 비밀번호입니다.'
         );
       }
 

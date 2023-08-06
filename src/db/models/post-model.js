@@ -1,3 +1,4 @@
+import { CustomError } from '../../middlewares';
 import { db } from '../index';
 
 const postModel = {
@@ -18,7 +19,7 @@ const postModel = {
 
       return insertResult;
     } catch (error) {
-      console.error(error);
+      throw new CustomError(error);
     }
   },
 };
