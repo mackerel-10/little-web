@@ -62,7 +62,7 @@ const tokenHandler = {
       }
 
       req.decoded = decodedAccessToken;
-      console.log('🪙 Access Token has been verified!\n');
+      console.log('🪙 Access Token has been verified!');
 
       next();
     } catch (error) {
