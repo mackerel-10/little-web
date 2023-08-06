@@ -2,6 +2,7 @@ import { CustomError } from '../../middlewares';
 import { db } from '../index';
 
 const postModel = {
+  // 게시글 생성
   insertPost: async function (postData) {
     try {
       const query = `
@@ -21,6 +22,7 @@ const postModel = {
     }
   },
 
+  // 게시글 리스트 가져오기(pagination 적용)
   getPostList: async function (postData) {
     try {
       const query = `

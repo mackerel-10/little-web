@@ -32,7 +32,7 @@ const postsService = {
       const user = await userModel.findUserByEmail(email);
       const postList = await postModel.getPostList({
         author_id: user.id,
-        minimumIndex: (page - 1) * perPage,
+        minimumIndex: (page - 1) * perPage + 1,
         maximumIndex: page * perPage,
       });
 
