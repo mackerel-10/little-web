@@ -44,6 +44,22 @@ const postsService = {
       next(error);
     }
   },
+
+  // GET /posts/:id
+  getPost: async function (req, res, next) {
+    try {
+      const { id } = req.params;
+
+      const post = await postModel.getPostById(id);
+
+      return res.status(StatusCodes.OK).json({
+        message: '게시글을 불러왔습니다.',
+        data: { post },
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export default postsService;

@@ -42,6 +42,25 @@ const postModel = {
       throw new CustomError(error);
     }
   },
+
+  // 특정 게시글 조회
+  getPostById: async function (postId) {
+    try {
+      const query = `
+        SELECT *
+        FROM post
+        WHERE id = ${postId};
+      `;
+
+      const connection = await db.getConnection();
+      const post = await connection.query(query);
+      connection.release();
+
+      return post[0];
+    } catch (error) {
+      throw new CustomError(error);
+    }
+  },
 };
 
 export default postModel;

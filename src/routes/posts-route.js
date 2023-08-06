@@ -20,7 +20,11 @@ postsRouter.get(
 );
 
 // 특정 게시글 조회
-postsRouter.get('/api/v1/posts/:id');
+postsRouter.get(
+  '/api/v1/posts/:id',
+  postsValidator.checkPostId,
+  postsService.getPost
+);
 
 // 특정 게시글 수정
 postsRouter.put('/api/v1/posts/:id');
