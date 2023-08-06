@@ -33,8 +33,8 @@ const postsService = {
       const user = await userModel.findUserByEmail(email);
       const postList = await postModel.getPostList({
         author_id: user.id,
-        minimumIndex: (page - 1) * perPage + 1,
-        maximumIndex: page * perPage,
+        page,
+        perPage,
       });
       if (!postList.length) {
         throw new CustomError(StatusCodes.NOT_FOUND, '게시글이 없습니다.');
