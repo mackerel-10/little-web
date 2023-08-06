@@ -23,7 +23,7 @@ const postsValidator = {
     try {
       const { id } = req.params;
       const schema = Joi.object().keys({
-        id: Joi.string().required(),
+        id: Joi.number().required(),
       });
 
       await schema.validateAsync({ id });

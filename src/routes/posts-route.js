@@ -27,7 +27,12 @@ postsRouter.get(
 );
 
 // 특정 게시글 수정
-postsRouter.put('/api/v1/posts/:id');
+postsRouter.put(
+  '/api/v1/posts/:id',
+  tokenHandler.verifyAccessToken,
+  postsValidator.checkPostId,
+  postsService.updatePost
+);
 
 // 특정 게시글 삭제
 postsRouter.delete('/api/v1/posts/:id');

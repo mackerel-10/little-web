@@ -67,6 +67,38 @@ const postsService = {
       next(error);
     }
   },
+
+  // PUT /posts/:id
+  updatePost: async function (req, res, next) {
+    try {
+      const { id } = req.params;
+      const { title, content } = req.body;
+      const { email } = req.decoded;
+
+      const user = await userModel.findUserByEmail(email);
+      const updateResult = await postModel.updatePost({
+        author_id: user.id,
+        postId: id,
+        title,
+        content,
+      });
+      if (updateResult.affectedRows <= 0) {
+        throw new CustomError(
+          StatusCodes.UNAUTHORIZED,
+          '게시글을 수정할 수 없습니다.'
+        );
+      }
+
+      return res.status(StatusCodes.OK).json({
+        message: '게시글을 수정했습니다.',
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // DELETE /posts/:id
+  deletePost: async function (req, res, next) {},
 };
 
 export default postsService;

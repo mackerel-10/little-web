@@ -61,6 +61,32 @@ const postModel = {
       throw new CustomError(error);
     }
   },
+
+  // 특정 게시글 업데이트
+  updatePost: async function (postData) {
+    try {
+      const query = `
+        UPDATE post
+        SET title = ?,
+        content = ?
+        WHERE author_id = ? AND id = ?;
+      `;
+
+      const connection = await db.getConnection();
+      const queryData = [
+        postData.title,
+        postData.content,
+        postData.author_id,
+        postData.postId,
+      ];
+      const updateResult = await connection.query(query, queryData);
+      connection.release();
+
+      return updateResult[0];
+    } catch (error) {
+      throw new CustomError(error);
+    }
+  },
 };
 
 export default postModel;
