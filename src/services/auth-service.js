@@ -6,7 +6,7 @@ import { tokenHandler } from './';
 
 class AuthService {
   // POST /auth/users
-  async createUser(req, res, next) {
+  async insertUser(req, res, next) {
     try {
       const { email, password } = req.body;
 
