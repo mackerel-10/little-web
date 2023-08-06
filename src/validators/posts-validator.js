@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 
 const postsValidator = {
   // pagination Validator
-  pageData: async function (req, res, next) {
+  checkPageData: async function (req, res, next) {
     try {
       const { page, perPage } = req.query;
       const schema = Joi.object().keys({
@@ -27,6 +27,22 @@ const postsValidator = {
       });
 
       await schema.validateAsync({ id });
+      next();
+    } catch (error) {
+      next({ statusCode: StatusCodes.BAD_REQUEST, message: error.message });
+    }
+  },
+
+  // postData 확인(title, content)
+  checkPostData: async function (req, res, next) {
+    try {
+      const { title, content } = req.body;
+      const schema = Joi.object().keys({
+        title: Joi.string().required(),
+        content: Joi.string().required(),
+      });
+
+      await schema.validateAsync({ title, content });
       next();
     } catch (error) {
       next({ statusCode: StatusCodes.BAD_REQUEST, message: error.message });

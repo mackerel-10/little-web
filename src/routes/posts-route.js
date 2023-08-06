@@ -8,6 +8,7 @@ const postsRouter = Router();
 postsRouter.post(
   '/api/v1/posts',
   tokenHandler.verifyAccessToken,
+  postsValidator.checkPostData,
   postsService.insertPost
 );
 
@@ -15,7 +16,7 @@ postsRouter.post(
 postsRouter.get(
   '/api/v1/posts',
   tokenHandler.verifyAccessToken,
-  postsValidator.pageData,
+  postsValidator.checkPageData,
   postsService.getPostList
 );
 
@@ -31,6 +32,7 @@ postsRouter.put(
   '/api/v1/posts/:id',
   tokenHandler.verifyAccessToken,
   postsValidator.checkPostId,
+  postsValidator.checkPostData,
   postsService.updatePost
 );
 
