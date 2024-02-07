@@ -18,8 +18,6 @@ docker-compose down
 
 ### 클라우드 환경
 
-- http://54.180.141.49
-
 ![My First Board (2)](https://github.com/mackerel-10/wanted-pre-onboarding-backend/assets/67633810/c04c2950-056e-4638-8c03-a4d20e6fa7b2)
 
 ### API 데모 영상
