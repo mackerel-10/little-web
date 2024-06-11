@@ -1,8 +1,13 @@
-# wanted-pre-onboarding-backend
+# Little web
 
-### 지원자: 전수진
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?logo=node.js&logoStyle=flat&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoStyle=flat&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoStyle=flat&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?logo=nginx&logoStyle=flat&logoColor=white)
 
-### 실행방법
+<!-- Little APIs with Node.js and MySQL. It's using babel as convert ES6 to commonJS. -->
+
+### Quick Start
 
 ```bash
 # 실행
@@ -20,16 +25,12 @@ docker-compose down
 
 ![My First Board (2)](https://github.com/mackerel-10/wanted-pre-onboarding-backend/assets/67633810/c04c2950-056e-4638-8c03-a4d20e6fa7b2)
 
-### API 데모 영상
-
-[프리온보딩 데모영상.mov](https://drive.google.com/file/d/14bwhAW-Pw6OPY9DA0B6ycO05_Vz1f2_L/view?usp=sharing)
-
 ### 구현 방법 및 이유
 
 - docker-compose로 배포 환경을 구성한 후 개발을 시작했습니다. 개발이 완료된 후 배포를 준비하면 환경적 차이 때문에 수정해야 하는 부분이 많이 생겨 처음부터 배포 환경을 구성했습니다.
-- JWT를 이용해 Refresh Token과 Access Token을 이용해 사용자 인증을 관리했습니다. Refresh Token이 존재하면 Token이 만료되기 전까지 매번 사용자가 로그인할 필요가 사라지고, Access Token을 발급받기에도 편리하기 때문입니다.
-- Joi를 활용해 request validator를 생성해 들어오는 요청 사항들을 검증해주었습니다.
-- MVC 구조를 사용해 구현을 하였고, controller 대신에 service를 생성하여 구현하였습니다.
+- JWT를 이용해 Refresh Token과 Access Token을 이용해 사용자 인증을 관리했습니다. Refresh Token을 사용함으로써 Token이 만료되기 전까지 매번 사용자가 로그인할 필요성이 사라지고, Access Token을 발급하기에도 편리합니다.
+- Joi를 활용해 request validator를 생성해 들어오는 요청 사항들을 검증했습니다.
+- MVC 구조를 사용해 구현을 하였고, controller 대신에 service를 생성하여 구현했습니다.
 
 ### API 명세
 
